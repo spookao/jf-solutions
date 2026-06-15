@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | JF Maintenance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2 class="sidebar-logo">JF Admin</h2>
+        <button class="nav-item active" onclick="showTab('messages')"><i class="fas fa-envelope"></i> Mensagens</button>
+        <button class="nav-item" onclick="showTab('testimonials')"><i class="fas fa-star"></i> Testemunhos</button>
+        <button class="nav-item" onclick="showTab('content')"><i class="fas fa-edit"></i> Conteúdo Site</button>
+        <button class="nav-item" style="margin-top: auto; color: var(--danger);" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+    </div>
+
+    <div class="main-content">
+        <div id="messages-tab">
+            <div class="page-header">
+                <h1 class="page-title">Mensagens de Contacto</h1>
+            </div>
+            <div class="card table-responsive">
+                <table id="messages-table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Serviço</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="testimonials-tab" style="display: none;">
+            <div class="page-header">
+                <h1 class="page-title">Testemunhos</h1>
+                <button class="btn-primary" style="width: auto;" onclick="openModal('testimonial-modal')">
+                    <i class="fas fa-plus"></i> Novo Testemunho
+                </button>
+            </div>
+            <div class="card table-responsive">
+                <table id="testimonials-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Função</th>
+                            <th>Conteúdo</th>
+                            <th>Rating</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="content-tab" style="display: none;">
+            <div class="page-header">
+                <h1 class="page-title">Conteúdo do Site</h1>
+            </div>
+            <div class="card" style="max-width: 600px;">
+                <p style="margin-bottom: 20px; color: var(--text-muted);">Gerencie informações básicas exibidas no website.</p>
+                <form id="content-form">
+                    <div class="form-group">
+                        <label>Título Principal Hero</label>
+                        <input type="text" id="hero-title" class="form-control" value="Cuidamos da sua propriedade como se fosse nossa">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone de Contacto</label>
+                        <input type="text" id="contact-phone" class="form-control" value="+351 912 345 678">
+                    </div>
+                    <div class="form-group">
+                        <label>Email de Contacto</label>
+                        <input type="email" id="contact-email" class="form-control" value="info@jfmaintenance.pt">
+                    </div>
+                    <button type="submit" class="btn-primary" style="margin-top: 10px;">
+                        <i class="fas fa-save"></i> Guardar Alterações
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ver Mensagem -->
+    <div id="message-modal" class="modal">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h2 class="modal-title" style="margin-bottom: 0;">Detalhes da Mensagem</h2>
+                <button type="button" class="action-btn" onclick="closeModal('message-modal')" style="color: var(--text-muted);"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="message-details">
+                <div class="detail-group">
+                    <span class="detail-label">Data de Envio</span>
+                    <p id="msg-date" class="detail-value"></p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="detail-group">
+                        <span class="detail-label">Nome Completo</span>
+                        <p id="msg-name" class="detail-value"></p>
+                    </div>
+                    <div class="detail-group">
+                        <span class="detail-label">Telefone</span>
+                        <p id="msg-phone" class="detail-value"></p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="detail-group">
+                        <span class="detail-label">Email</span>
+                        <p id="msg-email" class="detail-value"></p>
+                    </div>
+                    <div class="detail-group">
+                        <span class="detail-label">Tipo de Serviço</span>
+                        <p id="msg-service" class="detail-value"></p>
+                    </div>
+                </div>
+                
+                <div class="detail-group">
+                    <span class="detail-label">Mensagem</span>
+                    <div id="msg-content" class="detail-value message-box"></div>
+                </div>
+            </div>
+            
+            <div class="btn-group" style="margin-top: 30px; justify-content: flex-end;">
+                <button type="button" class="btn-outline" onclick="closeModal('message-modal')">Fechar</button>
+                <a href="#" id="msg-reply-email" class="btn-primary" style="width: auto; text-decoration: none;"><i class="fas fa-reply"></i> Responder por Email</a>
+                <a href="#" id="msg-reply-whatsapp" class="btn-primary" style="width: auto; text-decoration: none; background-color: #25d366; display: none;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Testemunho -->
+    <div id="testimonial-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title" class="modal-title">Novo Testemunho</h2>
+            <form id="testimonial-form">
+                <input type="hidden" id="testimonial-id">
+                
+                <div class="form-group">
+                    <label>Nome do Cliente</label>
+                    <input type="text" id="test-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Função/Local</label>
+                    <input type="text" id="test-role" class="form-control" placeholder="ex: Proprietário no Carvalhal">
+                </div>
+                
+                <div class="form-group">
+                    <label>Mensagem</label>
+                    <textarea id="test-content" class="form-control" rows="4" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Rating</label>
+                    <select id="test-rating" class="form-control">
+                        <option value="5">5 Estrelas</option>
+                        <option value="4">4 Estrelas</option>
+                        <option value="3">3 Estrelas</option>
+                    </select>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="button" class="btn-outline" onclick="closeModal('testimonial-modal')">Cancelar</button>
+                    <button type="submit" class="btn-primary" style="flex: 1;"><i class="fas fa-save"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
