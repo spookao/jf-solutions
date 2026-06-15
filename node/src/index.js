@@ -28,7 +28,7 @@ app.get('/api/health', (req, res) => {
 
 // Database Connection
 const PORT = process.env.PORT || 5000;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/jf_maintenance')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://admin:JNYLpDkzop7xbcSU@cluster0.h8lgoqv.mongodb.net/jf_maintenance?retryWrites=true&w=majority&appName=Cluster0')
   .then(async () => {
     console.log('Connected to MongoDB');
     
