@@ -34,13 +34,17 @@ if (loginForm) {
     });
 }
 
+function isLoginPage() {
+    return window.location.pathname.includes('login');
+}
+
 function checkAuth() {
     const token = localStorage.getItem('token');
-    if (!token && !window.location.pathname.includes('login.html')) {
+    if (!token && !isLoginPage()) {
         window.location.href = 'login.html';
     }
 }
 
-if (!window.location.pathname.includes('login.html')) {
+if (!isLoginPage()) {
     checkAuth();
 }
