@@ -209,9 +209,21 @@ nav {
 
 body.home-page header:not(.scrolled) .logo-mark,
 body.home-page header:not(.scrolled) .logo-text,
-body.home-page header:not(.scrolled) .nav-links a:not(.btn-header),
-body.home-page header:not(.scrolled) .mobile-menu-btn {
+body.home-page header:not(.scrolled) .nav-links a:not(.btn-header) {
     color: white;
+}
+
+/* Mobile Menu Button - always dark unless on mobile layout before scroll AND menu is closed */
+@media (max-width: 768px) {
+    body.home-page header:not(.scrolled) .mobile-menu-btn:not(.active) {
+        color: white;
+    }
+    
+    /* Ensure mobile menu button is always visible on non-homepage */
+    body:not(.home-page) header .mobile-menu-btn {
+        display: block;
+        color: var(--dark-purple);
+    }
 }
 
 body.home-page header:not(.scrolled) .logo-img {
@@ -772,6 +784,11 @@ footer {
     
     .mobile-menu-btn { display: block; }
     
+    /* Ensure the mobile menu button icon is sized correctly */
+    .mobile-menu-btn i {
+        font-size: 1.8rem;
+    }
+    
     .nav-links { 
         position: fixed;
         top: 0;
@@ -799,10 +816,19 @@ footer {
     
     .nav-links a {
         font-size: 1.5rem;
+        color: var(--text-dark) !important;
     }
 
 
     
+    .nav-links a::after {
+        background: var(--dark-purple) !important;
+    }
+
+    .nav-links .btn-header {
+        color: white !important;
+    }
+
     .cta-banner h2 { font-size: 2rem; }
     .hero-content .btn { width: 100%; }
 }
